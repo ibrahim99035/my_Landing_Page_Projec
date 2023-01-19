@@ -8,19 +8,7 @@ const targetSections = document.querySelectorAll("section");
 // the second global variable we have is another constant to hold our navigation list elemnt (ul)
 const myUnorderedList = document.getElementById("navbar__list");
 
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+// Helper functions
 
 // build the nav
 targetSections.forEach(targetSection => {
@@ -35,29 +23,29 @@ targetSections.forEach(targetSection => {
     listtItem.appendChild(itemAnchor);
     myUnorderedList.appendChild(listtItem);
 
-})
+});
 
 // Add class 'active' to section when near top of viewport
-function addActiveClassToSection(){
-    let theHightOfWindow = window.innerHeight;
-    for(let i = 0; i < targetSections.length; i++){
-        let farFromTop = targetSections[i].getBoundingClientRect().top;
-        if(farFromTop < theHightOfWindow){
-            targetSections[i].classList.add("your-active-class");
-            console.log(`${targetSections[i].id} in view`);
+// add active class
+function addActiveClass(activeSection){
+    activeSection.classList.add("your-active-class");
+}
+
+// remove active class
+function removeActiveClass(activeSection){
+    activeSection.classList.remove("your-active-class");
+}
+window.onscroll = function(){
+    targetSections.forEach(activeSection => {
+        let activeSecRect = activeSection.getBoundingClientRect().top;
+        let lowesetView = activeSecRect >= -400;
+        let highestView = activeSecRect <= 120;
+        if(lowesetView && highestView){
+            addActiveClass(activeSection);
         }else{
-            targetSections[i].classList.remove("your-active-class");
+            removeActiveClass(activeSection);
         }
-    }
-    // targetSections.forEach(targetSection => {
-    //     let farFromTop = targetSection.getBoundingClientRect().top;
-    //     if(farFromTop < theHightOfWindow){
-    //         targetSection.classList.add("your-active-class");
-    //         console.log(`${targetSection.id} in view`);
-    //     }else{
-    //         targetSection.classList.remove("your-active-class");
-    //     }
-    // });
+    });
 }
 
 // Scroll to anchor ID using scrollTO event
@@ -68,17 +56,4 @@ myAnchors.forEach(myAnchor => {
         document.querySelector(myAnchor.getAttribute('href')).scrollIntoView({behavior: "smooth"});
     });
 });
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
-window.addEventListener("scroll", addActiveClassToSection());
 
