@@ -45,6 +45,10 @@ p {
     color: #eee;
 }
 
+#me{
+    text-align: center;
+}
+
 /* ---- Layout Rules ---- */
 main {
     margin: 10vh 1em 10vh;
@@ -76,7 +80,7 @@ section {
 
 .navbar__menu .menu__link {
     display: block;
-    padding: 1em;
+    padding: 0.75em;
     font-weight: bold;
     text-decoration: none;
     color: #000;
@@ -194,8 +198,10 @@ section:nth-of-type(3n + 1) .landing__container::after {
 /* Section Active Styles */
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 section.your-active-class {
-    background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    background: rgb(8, 33, 44);
+    background: linear-gradient(0deg, rgba(5, 40, 63, 0.705) 0%, rgba(9, 33, 49, 0.308) 100%);
+    border-radius: 15px;
+    margin: auto;
 }
 
 section.your-active-class .landing__container::before {
