@@ -1,12 +1,12 @@
 /* Define Global Variables */
 // the first global variable we need to declare is probably a variable stores the sections we are targeting
-const targetSections = document.querySelectorAll("section");
+const TARGET_SECTIONS = document.querySelectorAll('section');
 
 // the second global variable we have is another constant to hold our navigation list elemnt (ul)
-const myUnorderedList = document.getElementById("navbar__list");
+const MY_UNORDERED_LIST = document.getElementById('navbar__list');
 
 // declare go up span to get and store the element
-const goUpSpan = document.getElementById("goUp");
+const GO_UP_SPAN = document.getElementById('goUp');
 
 /* End of global variables part */
 
@@ -20,25 +20,34 @@ const goUpSpan = document.getElementById("goUp");
 
 */
 function buildItem(targetSection){
-    let listtItem = document.createElement("li");
+    let listtItem = document.createElement('li');
 
-    let itemAnchor = document.createElement("a");
-    
-    let itemName = targetSection.dataset.nav; //  the name from the section custom attribute
-    
-    let itemAnchorHref = targetSection.id; // prepare the href by fetching the id
-    
-    itemAnchor.href = `#${itemAnchorHref}`; // set the href to the anchor
-    itemAnchor.innerText = itemName; // set the title in list item link
-    
-    itemAnchor.classList.add("navBarItemLink"); // class used later to query anchors
-    itemAnchor.classList.add("menu__link"); // styles provided from the skeleton
+    let itemAnchor = document.createElement('a');
 
-    itemAnchor.setAttribute("id", itemAnchorHref); // set the same id as the section for active state
+    //  the name from the section custom attribute
+    let itemName = targetSection.dataset.nav;
     
-    listtItem.appendChild(itemAnchor); // append anchors to the list item
+    // prepare the href by fetching the id
+    let itemAnchorHref = targetSection.id;
     
-    myUnorderedList.appendChild(listtItem); // append the list item to thelist and the end of round
+    // set the href to the anchor
+    itemAnchor.href = `#${itemAnchorHref}`;
+    // set the title in list item link
+    itemAnchor.innerText = itemName;
+    
+    // class used later to query anchors
+    itemAnchor.classList.add('navBarItemLink');
+    // styles provided from the skeleton
+    itemAnchor.classList.add('menu__link');
+
+    // set the same id as the section for active state
+    itemAnchor.setAttribute('id', itemAnchorHref);
+    
+    // append anchors to the list item
+    listtItem.appendChild(itemAnchor);
+    
+    // append the list item to thelist and the end of round
+    MY_UNORDERED_LIST.appendChild(listtItem);
 }
 
 /* Function 2 & Function 3
@@ -48,14 +57,14 @@ function buildItem(targetSection){
 */
 // add active class function
 function addActiveClass(activeSection, activeAnchor){
-    activeSection.classList.add("your-active-class");
-    activeAnchor.classList.add("active__link__item");
+    activeSection.classList.add('your-active-class');
+    activeAnchor.classList.add('active__link__item');
 }
 
 // remove active class function
 function removeActiveClass(activeSection, activeAnchor){
-    activeSection.classList.remove("your-active-class");
-    activeAnchor.classList.remove("active__link__item");
+    activeSection.classList.remove('your-active-class');
+    activeAnchor.classList.remove('active__link__item');
 }
 
 /* Function 4: Activate or deactivate sections in the page
@@ -67,10 +76,13 @@ function removeActiveClass(activeSection, activeAnchor){
 function sectionActivator(activeSection){
     // get the property (top) that changes during scrolling
     let activeSecRect = activeSection.getBoundingClientRect().top;
-        
-    let lowesetView = activeSecRect >= -400; // the lowest valid border that works with me
-    let highestView = activeSecRect <= 120; // the highest valid border that works with me
-    let checkMatch = lowesetView && highestView; // logical and operator between ranges
+    
+    // the lowest valid border that works with me
+    let lowesetView = activeSecRect >= -400;
+    // the highest valid border that works with me
+    let highestView = activeSecRect <= 120;
+    // logical and operator between ranges
+    let checkMatch = lowesetView && highestView;
 
     let relatedAnchor = document.getElementById(activeSection.id);
 
@@ -89,9 +101,7 @@ function clickItem(theAnchor){
         event.preventDefault();
         // scroll to the current href attribute smoothly
         let linkHref = document.querySelector(theAnchor.getAttribute('href'))
-        linkHref.scrollIntoView({
-            behavior: "smooth"
-        });
+        linkHref.scrollIntoView({behavior: 'smooth'});
     });
 }
 
@@ -99,10 +109,7 @@ function clickItem(theAnchor){
     - Scroll to top 0 smoothly 
 */
 function toTopScroll(){
-    window.scrollTo({
-        top: 0, 
-        behavior: "smooth"
-    });
+    window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 /* End accssable functiond */
@@ -112,10 +119,9 @@ function toTopScroll(){
 /* Action 2: Build the navigation bar 
     - pass each section as an argument to (build item) function
 */
-targetSections.forEach(targetSection => {
+TARGET_SECTIONS.forEach(targetSection => {
     buildItem(targetSection);
 });
-
 
 /* Action 3: activate section and its related anchor
     - onscroll event on window object.
@@ -123,7 +129,7 @@ targetSections.forEach(targetSection => {
     - the function setting active state to the section on viewport and its related anchor link.
 */
 window.onscroll = () => {
-    targetSections.forEach(activeSection => {
+    TARGET_SECTIONS.forEach(activeSection => {
         sectionActivator(activeSection);
     });
 }
@@ -132,8 +138,8 @@ window.onscroll = () => {
     - declare a constant to query all anchors with the class navBarItemLink.
     - itrate acroee them and pass each section as an arguemnt to clickItem function to apply the process.
 */
-const myAnchors = document.querySelectorAll(".navBarItemLink");
-myAnchors.forEach(myAnchor => {
+const MY_ANCHORS = document.querySelectorAll('.navBarItemLink');
+MY_ANCHORS.forEach(myAnchor => {
     clickItem(myAnchor);
 });
 
@@ -141,6 +147,6 @@ myAnchors.forEach(myAnchor => {
     - add an event listener to goUpSpan global variable to listen to click event.
     - apply the function toTopScroll on the span.
 */
-goUpSpan.addEventListener('click', toTopScroll);
+GO_UP_SPAN.addEventListener('click', toTopScroll);
 
 /* End Main Actions */
