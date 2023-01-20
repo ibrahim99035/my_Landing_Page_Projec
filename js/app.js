@@ -44,7 +44,7 @@ function removeActiveClass(activeSection){
 }
 
 // Scroll event on the window object
-window.onscroll = function(){
+window.onscroll = () => {
     //iterate all sections to check if each section in in the view during scrolling or not
     targetSections.forEach(activeSection => {
         // get the property (top) that changes during scrolling
@@ -52,13 +52,9 @@ window.onscroll = function(){
         
         let lowesetView = activeSecRect >= -400; // the lowest valid border that works with me
         let highestView = activeSecRect <= 120; // the highest valid border that works with me
-        
+        let checkMatch = lowesetView && highestView; // logical and operator between ranges
         // Match ranges to chech the viewport of acive section
-        if(lowesetView && highestView){
-            addActiveClass(activeSection);
-        }else{
-            removeActiveClass(activeSection);
-        }
+        checkMatch ? addActiveClass(activeSection):removeActiveClass(activeSection);
     });
 }
 /* End Distinguish active section functionality*/
@@ -73,7 +69,10 @@ myAnchors.forEach(myAnchor => {
         // prevet the deafult action of anchor tags in order to create custome scroll
         event.preventDefault();
         // scroll to the current href attribute smoothly
-        document.querySelector(myAnchor.getAttribute('href')).scrollIntoView({behavior: "smooth"});
+        let linkHref = document.querySelector(myAnchor.getAttribute('href'))
+        linkHref.scrollIntoView({
+            behavior: "smooth"
+        });
     });
 });
 /* End scroll to sections smoothly functionality */
@@ -82,6 +81,9 @@ myAnchors.forEach(myAnchor => {
 /* Start scroll to top smoothly functionality */
 // Add click event on go up span to go up smoothly
 goUpSpan.addEventListener('click', function(){
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({
+        top: 0, 
+        behavior: "smooth"
+    });
 });
 /* End scroll to top smoothly functionality */
