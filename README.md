@@ -300,3 +300,222 @@ I had learned alot about events, the DOM, JS functions, and other skills in mark
 During this journey i learned alot from MDN web docs, W3schools, Toturial point, and other articals and youtube videos, and even return to course lessons and parts.
 
 I want to thank Udacity and FWD for allowing my to experience this fun and helpful journey.
+
+## Resubmit the project
+
+> The Requrements that I had met:
+
+```Plaintext
+- Project has the structure.
+
+- Styling has been added for active states.
+
+- There are at least 4 sections that have been added to the page.
+
+- Navigation is built dynamically as an unordered list.
+
+- When clicking an item from the navigation menu, the link should scroll to the appropriate section.
+
+- The ReadMe file should have non-default text in it...
+
+- Comments are present and effectively explain longer code procedure when necessary.
+```
+
+> I have the following requirements to meet:
+
+```Plaintext
+- All features are usable across modern desktop, tablet, and phone browsers.
+
+- It should be clear which section is being viewed while scrolling through the page.
+
+- Code is formatted with consistent, logical, and easy-to-read formatting.
+```
+
+### First requirement : All features are usable across modern desktop, tablet, and phone browsers
+
+This requirement related to the responsive design of the navgiation bar, so i made some changes on css file:
+
+- Change `ul` and `li` styles.
+
+```css
+.navbar__menu ul {
+    margin: 0 0 0 -40px;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.navbar__menu li {
+    position: relative;
+    display: inline-block;
+}
+```
+
+- Set media quiries to set different font sizes according to different devices.
+
+```css
+/* Media Queries to change nav according to devices */
+@media(max-width: 656px){
+    li{
+        font-size: 15px;
+    }
+}
+@media(max-width: 485px){
+    li{
+        font-size: 14px;
+    }
+}
+@media(max-width: 420px){
+    li{
+        font-size: 13px;
+    }
+}
+@media(max-width: 380px){
+    li{
+        font-size: 11.5px;
+    }
+}
+
+@media(max-width: 320px){
+    li{
+        font-size: 10.5px;
+    }
+}
+@media(max-width: 280px){
+    li{
+        font-size: 8.75px;
+    }
+}
+```
+
+### Second requirement : It should be clear which section is being viewed while scrolling through the page
+
+This task require different procedures:
+
+- set id to different anchors according to each section.
+
+```JavaScript
+function buildItem(targetSection){
+    ...
+    
+    let itemAnchorHref = targetSection.id; 
+    
+    itemAnchor.href = `#${itemAnchorHref}`; 
+
+    ...
+
+    itemAnchor.setAttribute("id", itemAnchorHref); 
+
+    ...
+}
+```
+
+- create a class in css file to make the active anchor in special style.
+
+```css
+.active__link__item{
+    background-color: rgba(12, 51, 58, 0.897);
+    display: block;
+    color: rgb(255, 246, 246) !important;
+    text-decoration: none;
+    box-shadow: rgb(0, 0, 0);
+}
+```
+
+- add & remove active class to/from the active anchors through the functions of adding and removing active class to/from viewport section.
+
+```JavaScript
+function addActiveClass(activeSection, activeAnchor){
+    activeSection.classList.add("your-active-class");
+    activeAnchor.classList.add("active__link__item");
+}
+
+function removeActiveClass(activeSection, activeAnchor){
+    activeSection.classList.remove("your-active-class");
+    activeAnchor.classList.remove("active__link__item");
+}
+```
+
+- get the anchor related to each section, and pass it as an argument to the functions in the condition.
+
+```JavaScript
+let relatedAnchor = document.getElementById(activeSection.id);
+checkMatch ? addActiveClass(activeSection, relatedAnchor):removeActiveClass(activeSection, relatedAnchor);
+```
+
+### Third requirement : Code is formatted with consistent, logical, and easy-to-read formatting
+
+I tried to make the code DRY and in consistent format
+
+- At first, I had changed all constatnt names in `UPPER_CASE` format.
+- Then, I had changed all double qoutes `" "` to single qoutes `' '` for strings.
+- I am using shortahnd condition.
+- I had created main functions accessable across all files.
+
+```JavaScript
+function buildItem(targetSection){
+    let listtItem = document.createElement('li');
+
+    let itemAnchor = document.createElement('a');
+
+    let itemName = targetSection.dataset.nav;
+    
+    let itemAnchorHref = targetSection.id;
+    
+    
+    itemAnchor.href = `#${itemAnchorHref}`;
+   
+    itemAnchor.innerText = itemName;
+    
+    itemAnchor.classList.add('navBarItemLink');
+  
+    itemAnchor.classList.add('menu__link');
+
+    itemAnchor.setAttribute('id', itemAnchorHref);
+    
+    listtItem.appendChild(itemAnchor);
+    
+    MY_UNORDERED_LIST.appendChild(listtItem);
+}
+
+
+function addActiveClass(activeSection, activeAnchor){
+    activeSection.classList.add('your-active-class');
+    activeAnchor.classList.add('active__link__item');
+}
+
+function removeActiveClass(activeSection, activeAnchor){
+    activeSection.classList.remove('your-active-class');
+    activeAnchor.classList.remove('active__link__item');
+}
+
+function sectionActivator(activeSection){
+    
+    let activeSecRect = activeSection.getBoundingClientRect().top;
+    
+  
+    let lowesetView = activeSecRect >= -400;
+    
+    let highestView = activeSecRect <= 120;
+   
+    let checkMatch = lowesetView && highestView;
+
+    let relatedAnchor = document.getElementById(activeSection.id);
+
+    checkMatch ? addActiveClass(activeSection, relatedAnchor):removeActiveClass(activeSection, relatedAnchor);
+}
+
+function clickItem(theAnchor){
+    theAnchor.addEventListener('click', function(event){
+        event.preventDefault();
+        let linkHref = document.querySelector(theAnchor.getAttribute('href'))
+        linkHref.scrollIntoView({behavior: 'smooth'});
+    });
+}
+
+function toTopScroll(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+```
