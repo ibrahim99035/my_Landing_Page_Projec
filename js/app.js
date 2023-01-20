@@ -8,6 +8,9 @@ const MY_UNORDERED_LIST = document.getElementById('navbar__list');
 // declare go up span to get and store the element
 const GO_UP_SPAN = document.getElementById('goUp');
 
+// Navigation Bar
+const MY_NAV = document.getElementById('navbar__list');
+
 /* End of global variables part */
 
 /* Start accessable functions */
@@ -41,7 +44,7 @@ function buildItem(targetSection){
     itemAnchor.classList.add('menu__link');
 
     // set the same id as the section for active state
-    itemAnchor.setAttribute('id', itemAnchorHref);
+    listtItem.classList.add(itemAnchorHref);
     
     // append anchors to the list item
     listtItem.appendChild(itemAnchor);
@@ -56,15 +59,13 @@ function buildItem(targetSection){
     - Both of them takes a section as a parameter.
 */
 // add active class function
-function addActiveClass(activeSection, activeAnchor){
+function addActiveClass(activeSection){
     activeSection.classList.add('your-active-class');
-    activeAnchor.classList.add('active__link__item');
 }
 
 // remove active class function
-function removeActiveClass(activeSection, activeAnchor){
+function removeActiveClass(activeSection){
     activeSection.classList.remove('your-active-class');
-    activeAnchor.classList.remove('active__link__item');
 }
 
 /* Function 4: Activate or deactivate sections in the page
@@ -83,11 +84,9 @@ function sectionActivator(activeSection){
     let highestView = activeSecRect <= 120;
     // logical and operator between ranges
     let checkMatch = lowesetView && highestView;
-
-    let relatedAnchor = document.getElementById(activeSection.id);
-
+    let relatedItem = document.getElementsByClassName(activeSection.id);
     // Match ranges to chech the viewport of acive section
-    checkMatch ? addActiveClass(activeSection, relatedAnchor):removeActiveClass(activeSection, relatedAnchor);
+    checkMatch ? addActiveClass(activeSection):removeActiveClass(activeSection);
 }
 /* Function 5: Click on navigation item process
     - it takes the anchor of the item as parameter.
@@ -100,7 +99,7 @@ function clickItem(theAnchor){
         // prevet the deafult action of anchor tags in order to create custome scroll
         event.preventDefault();
         // scroll to the current href attribute smoothly
-        let linkHref = document.querySelector(theAnchor.getAttribute('href'))
+        let linkHref = document.querySelector(theAnchor.getAttribute('href'));
         linkHref.scrollIntoView({behavior: 'smooth'});
     });
 }
@@ -138,8 +137,8 @@ window.onscroll = () => {
     - declare a constant to query all anchors with the class navBarItemLink.
     - itrate acroee them and pass each section as an arguemnt to clickItem function to apply the process.
 */
-const MY_ANCHORS = document.querySelectorAll('.navBarItemLink');
-MY_ANCHORS.forEach(myAnchor => {
+let myAnchors= document.querySelectorAll('.navBarItemLink');
+myAnchors.forEach(myAnchor => {
     clickItem(myAnchor);
 });
 
