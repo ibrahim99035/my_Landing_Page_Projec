@@ -214,6 +214,21 @@ section.your-active-class .landing__container::after {
     animation: rotate 5s linear 0s infinite forwards reverse;
 }
 
+/*Go Up Span style and show span class*/
+#goUp{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(8, 47, 129, 0.753);
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.5s ease-in-out;
+}
+
+
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
 	from {

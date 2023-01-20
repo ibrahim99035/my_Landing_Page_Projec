@@ -8,6 +8,9 @@ const targetSections = document.querySelectorAll("section");
 // the second global variable we have is another constant to hold our navigation list elemnt (ul)
 const myUnorderedList = document.getElementById("navbar__list");
 
+// declare go up span
+const goUpSpan = document.getElementById("goUp");
+
 // Helper functions
 
 // build the nav
@@ -57,3 +60,7 @@ myAnchors.forEach(myAnchor => {
     });
 });
 
+// Add click event on go up span to go up smoothly
+goUpSpan.addEventListener('click', function(){
+    window.scrollTo({top: 0, behavior: "smooth"});
+});
