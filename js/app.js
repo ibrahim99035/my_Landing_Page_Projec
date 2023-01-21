@@ -8,9 +8,6 @@ const MY_UNORDERED_LIST = document.getElementById('navbar__list');
 // declare go up span to get and store the element
 const GO_UP_SPAN = document.getElementById('goUp');
 
-// Navigation Bar
-const MY_NAV = document.getElementById('navbar__list');
-
 /* End of global variables part */
 
 /* Start accessable functions */
@@ -27,29 +24,30 @@ function buildItem(targetSection){
 
     let itemAnchor = document.createElement('a');
 
-    //  the name from the section custom attribute
+    //  the name from the section custom attribute.
     let itemName = targetSection.dataset.nav;
     
-    // prepare the href by fetching the id
+    // prepare the href by fetching the id.
     let itemAnchorHref = targetSection.id;
     
-    // set the href to the anchor
+    // set the href to the anchor.
     itemAnchor.href = `#${itemAnchorHref}`;
-    // set the title in list item link
+    // set the title in list item link.
     itemAnchor.innerText = itemName;
     
-    // class used later to query anchors
+    // class used later to query anchors.
     itemAnchor.classList.add('navBarItemLink');
-    // styles provided from the skeleton
+    // styles provided from the skeleton.
     itemAnchor.classList.add('menu__link');
-
-    // set the same id as the section for active state
-    listtItem.classList.add(itemAnchorHref);
     
-    // append anchors to the list item
+    // Build an id for the anchor for active state purpose.
+    let buildRelate = `Relate${itemAnchorHref}`;
+    itemAnchor.setAttribute('id', buildRelate);
+
+    // append anchors to the list item.
     listtItem.appendChild(itemAnchor);
     
-    // append the list item to thelist and the end of round
+    // append the list item to thelist and the end of round.
     MY_UNORDERED_LIST.appendChild(listtItem);
 }
 
@@ -59,13 +57,15 @@ function buildItem(targetSection){
     - Both of them takes a section as a parameter.
 */
 // add active class function
-function addActiveClass(activeSection){
+function addActiveClass(activeSection, relatedAnchor){
     activeSection.classList.add('your-active-class');
+    relatedAnchor.classList.add('active__link__item');
 }
 
 // remove active class function
-function removeActiveClass(activeSection){
+function removeActiveClass(activeSection, relatedAnchor){
     activeSection.classList.remove('your-active-class');
+    relatedAnchor.classList.remove('active__link__item');
 }
 
 /* Function 4: Activate or deactivate sections in the page
@@ -75,18 +75,22 @@ function removeActiveClass(activeSection){
     - it passes to the functions, the current section as an argument.
 */
 function sectionActivator(activeSection){
-    // get the property (top) that changes during scrolling
+    // get the property (top) that changes during scrolling.
     let activeSecRect = activeSection.getBoundingClientRect().top;
+
+    // Catech the related id of the section.
+    let activeId = activeSection.id;
+    let relatedAnchorId = `Relate${activeId}`;
+    let relatedAnchor = document.getElementById(relatedAnchorId);
     
-    // the lowest valid border that works with me
+    // the lowest valid border that works with me.
     let lowesetView = activeSecRect >= -400;
-    // the highest valid border that works with me
+    // the highest valid border that works with me.
     let highestView = activeSecRect <= 120;
-    // logical and operator between ranges
+    // logical and operator between ranges.
     let checkMatch = lowesetView && highestView;
-    let relatedItem = document.getElementsByClassName(activeSection.id);
-    // Match ranges to chech the viewport of acive section
-    checkMatch ? addActiveClass(activeSection):removeActiveClass(activeSection);
+    // Match ranges to chech the viewport of acive section.
+    checkMatch ? addActiveClass(activeSection, relatedAnchor):removeActiveClass(activeSection, relatedAnchor);
 }
 /* Function 5: Click on navigation item process
     - it takes the anchor of the item as parameter.
