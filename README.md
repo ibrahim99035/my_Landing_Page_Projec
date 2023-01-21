@@ -472,7 +472,8 @@ function buildItem(targetSection){
   
     itemAnchor.classList.add('menu__link');
 
-    itemAnchor.setAttribute('id', itemAnchorHref);
+    let buildRelate = `Relate${itemAnchorHref}`;
+    itemAnchor.setAttribute('id', buildRelate);
     
     listtItem.appendChild(itemAnchor);
     
@@ -480,28 +481,29 @@ function buildItem(targetSection){
 }
 
 
-function addActiveClass(activeSection, activeAnchor){
+function addActiveClass(activeSection, relatedAnchor){
     activeSection.classList.add('your-active-class');
-    activeAnchor.classList.add('active__link__item');
+    relatedAnchor.classList.add('active__link__item');
 }
 
-function removeActiveClass(activeSection, activeAnchor){
+function removeActiveClass(activeSection, relatedAnchor){
     activeSection.classList.remove('your-active-class');
-    activeAnchor.classList.remove('active__link__item');
+    relatedAnchor.classList.remove('active__link__item');
 }
 
 function sectionActivator(activeSection){
     
     let activeSecRect = activeSection.getBoundingClientRect().top;
     
-  
+    let activeId = activeSection.id;
+    let relatedAnchorId = `Relate${activeId}`;
+    let relatedAnchor = document.getElementById(relatedAnchorId);
+
     let lowesetView = activeSecRect >= -400;
     
     let highestView = activeSecRect <= 120;
    
     let checkMatch = lowesetView && highestView;
-
-    let relatedAnchor = document.getElementById(activeSection.id);
 
     checkMatch ? addActiveClass(activeSection, relatedAnchor):removeActiveClass(activeSection, relatedAnchor);
 }
